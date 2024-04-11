@@ -4,13 +4,13 @@ Prototipo de biblioteca virtual
 
 ## Dependencias
 
-Para compilar y ejecutar este proyecto es necesario instalar la libreria Asio C++:
+Para compilar y ejecutar este proyecto es necesario instalar la libreria Asio C++, y la base de datos SQLite:
 
 ```sh
 # Distribuciones Debian, basadas en Ubuntu
-sudo apt install libasio-dev
+sudo apt install libasio-dev sqlite3
 # Distribuciones basadas en Arch
-sudo pacman -S asio
+sudo pacman -S asio sqlite
 ```
 
 ## Estructura del Directorio `src/`
