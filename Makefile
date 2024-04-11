@@ -20,6 +20,7 @@ $(BINNAME): $(SRCS)
 precompile:
 	mkdir -p $(BINDIR)
 	mkdir -p $(OBJDIR)
+	cp -pr $(SRCDIR)/static $(BINDIR)
 	cp -pr $(SRCDIR)/templates $(BINDIR)
 
 clean:

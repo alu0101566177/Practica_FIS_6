@@ -3,7 +3,7 @@
 int main() {
   crow::SimpleApp app;
 
-  CROW_ROUTE(app, "/")([](std::string name) {
+  CROW_ROUTE(app, "/")([]() {
     auto page{crow::mustache::load("index.html")};
     return page.render();
   });
