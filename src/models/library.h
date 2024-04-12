@@ -1,14 +1,14 @@
 #ifndef MODELS_LIBRARY_H_
 #define MODELS_LIBRARY_H_
 
+#include "../../lib/crow_all.h"
 #include <string>
 
-class Library {
-  public:
-    int id;
-    int capacity;
-    std::string name;
-    std::string location;
+struct Library {
+  int id;
+  int capacity;
+  std::string name;
+  std::string location;
 };
 
 #endif

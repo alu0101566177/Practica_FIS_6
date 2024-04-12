@@ -1,14 +1,14 @@
-#ifndef MODELS_BOOK_H_
-#define MODELS_BOOK_H_
+#ifndef MODELS_USER_H_
+#define MODELS_USER_H_
 
+#include "../../lib/crow_all.h"
 #include <string>
 
-class User {
-  public:
-    int id;
-    std::string name;
-    std::string email;
-    std::string password;
+struct User {
+  int id;
+  std::string name;
+  std::string email;
+  std::string password;
 };
 
 #endif

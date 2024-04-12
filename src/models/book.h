@@ -4,14 +4,13 @@
 #include <optional>
 #include <string>
 
-class Book {
-  public:
-    int id;
-    std::string title;
-    std::string description;
-    std::string image_url;
-    std::optional<int> library_id;
-    int stock; // -1 if is an online book
+struct Book {
+  int id;
+  std::string title;
+  std::string description;
+  std::string image_url;
+  std::optional<int> library_id;
+  int stock; // -1 if is an online book
 };
 
 #endif
