@@ -6,16 +6,17 @@ SRCDIR		     =		src
 
 CXX				=		g++
 CXXFLAGS	=		-g -std=c++17
+CXXSQLITE = -l sqlite3
 
 SRCS = $(shell find $(SRC_DIR) -name '*.cc')
 
 all: precompile $(BINNAME) 
 
-$(BINNAME): $(SRCS)
-	$(CXX) $(CXXFLAGS) $(SRCS) -o $(BINDIR)/$@
+run: precompile $(BINNAME)
+	cd $(BINDIR) && ./$(BINNAME)
 
-# $(OBJDIR)/%.o: $(SRCDIR)/%.cc
-# 	$(CXX) $(CXXFLAGS) -c $< -o $@
+$(BINNAME): $(SRCS)
+	$(CXX) $(CXXFLAGS) $(SRCS) $(CXXSQLITE) -o $(BINDIR)/$@
 
 precompile:
 	mkdir -p $(BINDIR)
