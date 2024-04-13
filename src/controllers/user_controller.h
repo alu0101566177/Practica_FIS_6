@@ -29,9 +29,9 @@ class UserController {
       }
     }
 
-    bool DeleteUser(const std::string email, const std::string password) {
+    bool DeleteUser(const std::string email, const std::string password) const {
       int id{GetUser(email, password)};
-      if (id == -1) return -1;
+      if (id == -1) return false;
       storage_.remove<User>(id);
       return true;
     }
