@@ -24,6 +24,7 @@ typedef storage_t<
     column_t<std::string Book::*, empty_setter>,
     column_t<std::string Book::*, empty_setter>,
     column_t<std::string Book::*, empty_setter>,
+    column_t<std::string Book::*, empty_setter>,
     column_t<std::optional<int> Book::*, empty_setter>,
     column_t<int Book::*, empty_setter>
   >,

@@ -1,5 +1,4 @@
 BINDIR		=		bin
-OBJDIR		=		obj
 BINNAME   =   server
 
 SRCDIR		     =		src
@@ -20,10 +19,6 @@ $(BINNAME): $(SRCS)
 
 precompile:
 	mkdir -p $(BINDIR)
-	mkdir -p $(OBJDIR)
 	cp -pr $(SRCDIR)/static $(BINDIR)
 	cp -pr $(SRCDIR)/templates $(BINDIR)
-
-clean:
-	rm -rf bin/*
-	rm -rf obj/*
+	stat $(BINDIR)/db.sqlite || cp sample.sqlite $(BINDIR)/db.sqlite

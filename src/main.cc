@@ -1,5 +1,7 @@
 #include "../lib/crow_all.h"
+#include "controllers/user_controller.h"
 #include "db/database.h"
+#include "utils/serialize_models.h"
 
 // Sample main
 int main() {
@@ -11,68 +13,26 @@ int main() {
     return page.render();
   });
 
-  CROW_ROUTE(app, "/api/create-user")
-    .methods(crow::HTTPMethod::POST)
-  ([](const crow::request& req) {
-    auto body_json{crow::json::load(req.body)};
-    // Rest of the code
+  CROW_ROUTE(app, "/api/users")([&storage]() {
+    UserController controller{storage};
+    return SerializeModels(controller.GetAll());
   });
 
-  app.port(8080).multithreaded().run();
-}
+  CROW_ROUTE(app, "/api/create-user")
+    .methods(crow::HTTPMethod::POST)
+  ([&storage](const crow::request& req) {
+    auto body_json{crow::json::load(req.body)};
+    if (!body_json)
+      return crow::response{crow::status::BAD_REQUEST};
 
-// inline void AddUser(const UserController& controller) {
-//   std::string name, email, password;
-//   std::cout << "Insert the name: ";
-//   std::cin >> name;
-//
-//   std::cout << "Insert email: ";
-//   std::cin >> email;
-//
-//   std::cout << "Insert password: ";
-//   std::cin >> password;
-//
-//   std::cout << "Created user uid = " << controller.CreateUser(name, email, password) << '\n';
-// }
-//
-// inline void VerifyUser(const UserController& controller) {
-//   std::string email, password;
-//   std::cout << "Insert email: ";
-//   std::cin >> email;
-//   std::cout << "Insert password: ";
-//   std::cin >> password;
-//   std::cout << (controller.GetUser(email, password) ? "Usuario valido\n" : "Credenciales invalidas\n");
-// }
-//
-// inline void PrintUsers(Storage& storage) {
-//   auto users{storage.get_all<User>()};
-//   for (auto& user : users)
-//     std::cout << storage.dump(user) << '\n';
-// }
-//
-// int main() {
-//   while (true) {
-//     std::cout << "Create user (1)\nVerify user (2)\nPrint users (3)\nSelect option: ";
-//     Storage storage{GetDatabase()};
-//     UserController controller{storage};
-//     int option;
-//     std::cin >> option;
-//     switch (option) {
-//       case 0:
-//         return 0;
-//       case 1:
-//         AddUser(controller);
-//         break;
-//       case 2:
-//         VerifyUser(controller);
-//         break;
-//       case 3:
-//         PrintUsers(storage);
-//         break;
-//       default:
-//         std::cout << "Not valid\n";
-//         break;
-//     }
-//   }
-//   return 0;
-// }
+    UserController controller{storage};
+    int id{controller.Create(User::FromJson(body_json))};
+    if (id == -1)
+      return crow::response{crow::status::BAD_REQUEST};
+
+    crow::json::wvalue response_body{{"id", id}};
+    return crow::response{crow::status::CREATED, response_body};
+  });
+
+  app.port(8080).run();
+}

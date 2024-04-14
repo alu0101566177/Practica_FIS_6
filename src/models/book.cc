@@ -4,6 +4,7 @@ Book Book::FromJson(const crow::json::rvalue& json) {
   Book book;
   book.id = -1;
   book.title = json["title"].s();
+  book.author = json["author"].s();
   book.description = json["description"].s();
   book.image_url = json["image_url"].s();
   book.stock = json["stock"].i();
@@ -18,6 +19,7 @@ crow::json::wvalue Book::ToJson() const {
   crow::json::wvalue json;
   json["id"] = id;
   json["title"] = title;
+  json["author"] = author;
   json["description"] = description;
   json["image_url"] = image_url;
   json["stock"] = stock;

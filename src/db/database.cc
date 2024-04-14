@@ -19,6 +19,7 @@ Storage GetDatabase() {
     make_table("books",
       make_column("id", &Book::id, primary_key().autoincrement()),
       make_column("title", &Book::title),
+      make_column("author", &Book::author),
       make_column("description", &Book::description),
       make_column("image_url", &Book::image_url),
       make_column("libray_id", &Book::library_id),

@@ -8,6 +8,7 @@
 struct Book {
   int id;
   std::string title;
+  std::string author;
   std::string description;
   std::string image_url;
   std::optional<int> library_id;
