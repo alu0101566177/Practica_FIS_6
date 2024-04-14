@@ -23,6 +23,7 @@ La carpeta `src/` contiene las siguientes subcarpetas:
 - `static/`: Contiene los recursos estáticos de la aplicación, como imágenes, hojas de estilo y archivos JavaScript.
 - `templates/`: Almacena las plantillas HTML utilizadas para generar las vistas de la aplicación.
 - `views/`: Contiene las vistas de la aplicación, las cuales combinan plantillas HTML con datos dinámicos.
+- `utils/`: Contiene pequeñas utilidades
 
 ## Compilación y ejecución
 
