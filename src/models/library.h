@@ -9,6 +9,9 @@ struct Library {
   int capacity;
   std::string name;
   std::string location;
+
+  static Library FromJson(const crow::json::rvalue&);
+  crow::json::wvalue ToJson() const;
 };
 
 #endif

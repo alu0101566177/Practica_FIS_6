@@ -9,6 +9,9 @@ struct User {
   std::string name;
   std::string email;
   std::string password;
+
+  static User FromJson(const crow::json::rvalue&);
+  crow::json::wvalue ToJson() const;
 };
 
 #endif
