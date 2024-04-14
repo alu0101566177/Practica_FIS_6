@@ -5,9 +5,6 @@
 #include "../models/library.h"
 #include "crud_controller.h"
 
-class LibraryController : public CRUDController<Library> {
-  public:
-    LibraryController(Storage& storage) : CRUDController<Library>{storage} {}
-};
+typedef CRUDController<Library> LibraryController;
 
 #endif

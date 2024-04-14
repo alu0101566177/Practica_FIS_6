@@ -6,9 +6,6 @@
 #include "crud_controller.h"
 #include <vector>
 
-class BooksController : public CRUDController<Book> {
-  public:
-    BooksController(Storage& storage) : CRUDController<Book>{storage} {}
-};
+typedef CRUDController<Book> BooksController;
 
 #endif

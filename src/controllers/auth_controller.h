@@ -5,6 +5,8 @@
 #include "user_controller.h"
 #include <optional>
 
+const int kAdminId{1};
+
 class AuthController {
   public:
     AuthController(Storage& storage) : users_{storage} {}
@@ -31,7 +33,13 @@ class AuthController {
     }
 
     bool ValidAdminToken(const std::string& token) const {
-      return token == "admintoken";
+      std::string raw_token{crow::utility::base64decode(token)};
+      crow::json::rvalue json{crow::json::load(raw_token)};
+
+      std::string email{json["email"].s()};
+      std::string password{json["password"].s()};
+
+      return users_.GetUserId(email, password) == kAdminId;
     }
 
   private:

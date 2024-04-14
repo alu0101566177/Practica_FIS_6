@@ -5,9 +5,6 @@
 #include "../models/event.h"
 #include "crud_controller.h"
 
-class EventsController : public CRUDController<Event> {
-  public:
-    EventsController(Storage& storage) : CRUDController<Event>{storage} {}
-};
+typedef CRUDController<Event> EventsController;
 
 #endif
