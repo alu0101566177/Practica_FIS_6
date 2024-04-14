@@ -1,0 +1,42 @@
+[
+  {
+    "title": "Harry Potter y la piedra filosofal",
+    "author": "J.K. Rowling",
+    "description": "Harry Potter nunca ha oído hablar de Hogwarts hasta que empiezan a caer cartas en el felpudo del número 4 de Privet Drive. Llevan la dirección escrita con tinta verde en un sobre de pergamino amarillento con un sello de lacre púrpura, y sus horripilantes tíos se apresuran a confiscarlas.",
+    "image_url": "https://m.media-amazon.com/images/I/91R1AixEiLL._SY342_.jpg",
+    "library_id": null,
+    "stock": -1
+  },
+  {
+    "title": "Don Quijote de la Mancha",
+    "author": "Miguel de Cervantes",
+    "description": "Una obra maestra de la literatura española que narra las aventuras del hidalgo Alonso Quijano, quien, tras leer demasiadas novelas de caballería, se cree un caballero andante y sale en busca de hazañas.",
+    "image_url": "https://www.elsotano.com/imagenes/9788408/978840827088.JPG",
+    "library_id": null,
+    "stock": -1
+  },
+  {
+    "title": "Cien años de soledad",
+    "author": "Gabriel García Márquez",
+    "description": "Una novela mágica que cuenta la historia de la familia Buendía a lo largo de siete generaciones en el pueblo ficticio de Macondo.",
+    "image_url": "https://m.media-amazon.com/images/I/91TvVQS7loL._SY466_.jpg",
+    "library_id": null,
+    "stock": -1
+  },
+  {
+    "title": "101 COSAS QUE DEBERIAS HACER ANTES DE SER MAYOR",
+    "author": "GeoPlaneta",
+    "description": "Una selección de actividades que estimularán la creatividad de los más jóvenes. Hacer malabarismos, criar mariposas, hacer un truco de magia, crear un código secreto, montar un volcán casero... y otras 96 divertidas actividades para tachar de la lista de cosas que hay que aprender a hacer antes de ser mayor. ¿Cuántas serás capaz de tachar?",
+    "image_url": "https://imagessl6.casadellibro.com/a/l/s5/96/9788408126096.webp",
+    "library_id": null,
+    "stock": -1
+  },
+  {
+    "title": "48 pistas sobre la desaparición de mi hermana",
+    "author": "Joyce Carol Oates",
+    "description": "La bella Marguerite desaparece repentinamente de su pequeño pueblo en el norte del estado de Nueva York, pero las causas no están del todo claras. ¿Hubo alguien más involucrado? ¿O simplemente aprovechó la oportunidad para dejar atrás su angustiosa vida? Veinte años después, su hermana menor, Gigi, reconstruye las pistas de lo acontecido aquellos días y de la investigación posterior. Poco a poco, las revelaciones sobre las dos hermanas se vuelven claras, y se desvela que su perfecta vida hogareña no era tan placentera como parecía. Y sutilmente, con la maestría de Joyce Carol Oates para el suspense, comenzamos a vislumbrar lo acaecido.",
+    "image_url": "https://imagessl8.casadellibro.com/a/l/s5/18/9788411321518.webp",
+    "library_id": null,
+    "stock": -1
+  }
+]

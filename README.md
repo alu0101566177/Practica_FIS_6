@@ -27,11 +27,8 @@ La carpeta `src/` contiene las siguientes subcarpetas:
 
 ## Compilación y ejecución
 
-Para la compilación se usa la herramienta **make**:
+Para la compilación y ejecución se usa la herramienta **make**:
 
 ```sh
-$ make clean
-$ make
-$ cd bin
-$ ./server
+$ make run
 ```
