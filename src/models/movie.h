@@ -1,12 +1,12 @@
-#define MOVIE_H
+#ifndef MODELS_MOVIE_H_
+#define MODELS_MOVIE_H_
 
 #include <string>
 #include <vector>
 #include <optional>
 #include "../../lib/crow_all.h"
 
-class Movie {
-public:
+struct Movie {
   int id;
   std::string title;
   std::string director;
@@ -22,4 +22,4 @@ public:
 };
 
 
-#endif // MOVIE_H
+#endif

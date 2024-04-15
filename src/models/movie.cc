@@ -34,12 +34,10 @@ crow::json::wvalue Movie::ToJson() const {
   json["image_url"] = image_url;
   json["rating"] = rating;
   json["stock"] = stock;
-  if (!genre.empty()) {
-    for (const auto& g : genre) {
-      json["genre"].push_back(g);
-    }
-  }
+  json["genre"] = genre;
   if (library_id.has_value())
-    json["library_id"] = *library_id;
+    json["library_id"] = library_id.value();
+  else
+    json["library_id"] = nullptr;
   return json;
 }

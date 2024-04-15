@@ -6,6 +6,7 @@
 #include "../models/book.h"
 #include "../models/event.h"
 #include "../models/library.h"
+#include "../models/movie.h"
 #include <string>
 #include <optional>
 
