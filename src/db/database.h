@@ -28,6 +28,17 @@ typedef storage_t<
     column_t<std::optional<int> Book::*, empty_setter>,
     column_t<int Book::*, empty_setter>
   >,
+  table_t<Movie, false,
+    column_t<int Movie::*, empty_setter, primary_key_with_autoincrement<primary_key_t<>>>,
+    column_t<std::string Movie::*, empty_setter>,
+    column_t<std::string Movie::*, empty_setter>,
+    column_t<std::string Movie::*, empty_setter>,
+    column_t<std::string Movie::*, empty_setter>,
+    column_t<double Movie::*, empty_setter>,
+    column_t<int Movie::*, empty_setter>,
+    column_t<std::optional<int> Movie::*, empty_setter>,
+    column_t<std::vector<std::string> Movie::*, empty_setter>
+  >,
   table_t<Library, false,
     column_t<int Library::*, empty_setter, primary_key_with_autoincrement<primary_key_t<>>>,
     column_t<int Library::*, empty_setter>,

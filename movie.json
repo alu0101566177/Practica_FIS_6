@@ -1,0 +1,48 @@
+[
+  {
+    "title": "Harry Potter y la piedra filosofal",
+    "director": "Chris Columbus",
+    "description": "Harry Potter, un niño huérfano que descubre que es un mago, comienza su educación en la Escuela Hogwarts de Magia y Hechicería, donde hace nuevos amigos y enfrenta desafíos emocionantes.",
+    "image_url": "https://m.media-amazon.com/images/I/91R1AixEiLL._SY342_.jpg",
+    "release_year": 2001,
+    "genre": ["Fantasía", "Aventura"],
+    "rating": 7.6
+  },
+  {
+    "title": "El Señor de los Anillos: La Comunidad del Anillo",
+    "director": "Peter Jackson",
+    "description": "Frodo Bolsón, un hobbit de la Comarca, se embarca en una peligrosa aventura para destruir un poderoso anillo y detener al malvado Sauron de conquistar la Tierra Media.",
+    "image_url": "https://m.media-amazon.com/images/I/71nIIvqA9YL._AC_SY679_.jpg",
+    "release_year": 2001,
+    "genre": ["Fantasía", "Aventura"],
+    "rating": 8.8
+  },
+  {
+    "title": "Piratas del Caribe: La maldición del Perla Negra",
+    "director": "Gore Verbinski",
+    "description": "El capitán Jack Sparrow se une a una joven aristócrata y a un joven herrero para detener a un grupo de piratas muertos vivientes liderados por el temible capitán Barbossa.",
+    "image_url": "https://m.media-amazon.com/images/I/71vQCwZCoYL._AC_SY679_.jpg",
+    "release_year": 2003,
+    "genre": ["Aventura", "Fantasía"],
+    "rating": 8.0
+  },
+  {
+    "title": "Titanic",
+    "director": "James Cameron",
+    "description": "Un joven artista y una joven de clase alta se enamoran a bordo del Titanic durante su fatídico viaje inaugural.",
+    "image_url": "https://m.media-amazon.com/images/I/51zJPX1jEQL._AC_SY445_.jpg",
+    "release_year": 1997,
+    "genre": ["Romance", "Drama"],
+    "rating": 7.8
+  },
+  {
+    "title": "El Padrino",
+    "director": "Francis Ford Coppola",
+    "description": "La saga de una poderosa familia de la mafia italiana dirigida por Don Vito Corleone y su hijo Michael, quien se ve arrastrado a la vida criminal de su familia.",
+    "image_url": "https://m.media-amazon.com/images/I/51UV47I3JDL._AC_.jpg",
+    "release_year": 1972,
+    "genre": ["Crimen", "Drama"],
+    "rating": 9.2
+  }
+]
+  
