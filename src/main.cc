@@ -1,12 +1,9 @@
 #include "../lib/crow_all.h"
-#include "api.h"
 #include "db/database.h"
 #include "controllers/auth_controller.h"
 #include "controllers/user_controller.h"
 #include "controllers/books_controller.h"
-#include "controllers/events_controller.h"
-#include "controllers/library_controller.h"
-#include "utils/serialize_models.h"
+#include "router/crud_router.h"
 
 // Sample main
 int main() {
@@ -21,8 +18,9 @@ int main() {
   AuthController auth{storage};
   UserController users{storage};
   BooksController books{storage};
-  EventsController events{storage};
-  LibraryController library{storage};
+
+  CRUDRouter<User> user_router{auth, users};
+  CRUDRouter<Book> book_router{auth, books};
 
   // Main library web page
   CROW_ROUTE(app, "/")([]() {
@@ -54,43 +52,43 @@ int main() {
   });
 
   // Get
-  CROW_ROUTE(app, "/api/users")([&auth, &users](const crow::request& req) {
-    std::string token{req.get_header_value("Authorization")};
-    if (token.length() == 0 || !auth.ValidAdminToken(token))
-      return crow::response{crow::status::UNAUTHORIZED};
+  CROW_ROUTE(app, "/api/users")([&user_router](const crow::request& req) {
+    return user_router.GetAllRoute(req, true);
+  });
+  CROW_ROUTE(app, "/api/books")([&book_router](const crow::request& req) {
+    return book_router.GetAllRoute(req, false);
+  });
 
-    return crow::response{SerializeModels(users.GetAll())};
+  // GetById
+  CROW_ROUTE(app, "/api/user/<int>")([&user_router](const crow::request& req, const int id) {
+    return user_router.GetByIdRoute(req, id, true);
   });
-  CROW_ROUTE(app, "/api/books")([&books]() {
-    return crow::response{SerializeModels(books.GetAll())};
-  });
-  CROW_ROUTE(app, "/api/events")([&events]() {
-    return crow::response{SerializeModels(events.GetAll())};
-  });
-  CROW_ROUTE(app, "/api/librarys")([&library]() {
-    return crow::response{SerializeModels(library.GetAll())};
+  CROW_ROUTE(app, "/api/book/<int>")([&book_router](const crow::request& req, const int id) {
+    return book_router.GetByIdRoute(req, id, false);
   });
 
   // Create
   CROW_ROUTE(app, "/api/user")
     .methods(crow::HTTPMethod::POST)
-  ([&auth, &users](const crow::request& req) {
-    return CreateRoute(req, auth, users);
+  ([&user_router](const crow::request& req) {
+    return user_router.CreateRoute(req, true);
   });
   CROW_ROUTE(app, "/api/book")
     .methods(crow::HTTPMethod::POST)
-  ([&auth, &books](const crow::request& req) {
-    return CreateRoute(req, auth, books);
+  ([&book_router](const crow::request& req) {
+    return book_router.CreateRoute(req, true);
   });
-  CROW_ROUTE(app, "/api/event")
-    .methods(crow::HTTPMethod::POST)
-  ([&auth, &events](const crow::request& req) {
-    return CreateRoute(req, auth, events);
+
+  // Delete
+  CROW_ROUTE(app, "/api/user/<int>")
+    .methods(crow::HTTPMethod::DELETE)
+  ([&user_router](const crow::request& req, const int id) {
+    return user_router.DeleteRoute(req, id, true);
   });
-  CROW_ROUTE(app, "/api/library")
-    .methods(crow::HTTPMethod::POST)
-  ([&auth, &library](const crow::request& req) {
-    return CreateRoute(req, auth, library);
+  CROW_ROUTE(app, "/api/book/<int>")
+    .methods(crow::HTTPMethod::DELETE)
+  ([&book_router](const crow::request& req, const int id) {
+    return book_router.DeleteRoute(req, id, true);
   });
 
   app.port(8080).run();
