@@ -9,19 +9,11 @@ Movie Movie::FromJson(const crow::json::rvalue& json) {
   movie.image_url = json["image_url"].s();
   movie.rating = json["rating"].d();
   movie.stock = json["stock"].i();
-  if (json.has("genre")) {
-      for (const auto& genre : json["genre"]) {
-          movie.genre.push_back(genre.s());
-      }
-  }
-  if (json.has("library_id")) {
-      if (json["library_id"].t() == crow::json::type::Number)
-          movie.library_id = json["library_id"].i();
-      else
-          movie.library_id = std::nullopt;
-  } else {
+  movie.genre = json["genre"].s();
+  if (json["library_id"].t() == crow::json::type::Number)
+      movie.library_id = json["library_id"].i();
+  else
       movie.library_id = std::nullopt;
-  }
   return movie;
 }
 

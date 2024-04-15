@@ -14,7 +14,7 @@ struct Movie {
   std::string image_url;
   double rating;
   int stock;
-  std::vector<std::string> genre;
+  std::string genre;
   std::optional<int> library_id;
 
   static Movie FromJson(const crow::json::rvalue& json);
