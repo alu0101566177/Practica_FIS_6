@@ -10,7 +10,12 @@
 
 // Sample main
 int main() {
-  crow::SimpleApp app;
+  crow::App<crow::CORSHandler> app;
+  auto& cors{app.get_middleware<crow::CORSHandler>()};
+  cors.global()
+    .headers("X-Custom-Header", "Upgrade-Insecure-Requests")
+    .methods("POST"_method, "GET"_method, "DELETE"_method, "PUT"_method);
+
   Storage storage{GetDatabase()};
 
   AuthController auth{storage};
@@ -19,8 +24,14 @@ int main() {
   EventsController events{storage};
   LibraryController library{storage};
 
+  // Main library web page
   CROW_ROUTE(app, "/")([]() {
     auto page{crow::mustache::load("index.html")};
+    return page.render();
+  });
+  // Admin panel
+  CROW_ROUTE(app, "/admin")([]() {
+    auto page{crow::mustache::load("admin.html")};
     return page.render();
   });
 

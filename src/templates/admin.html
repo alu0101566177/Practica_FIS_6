@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <title>Administración biblioteca virtual</title>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Administración biblioteca</a>
+      </div>
+    </nav>
+    <div class="container" style="padding: 10px 0">
+      <h2>Libros</h2>
+      <ul id="book-list" class="list-group mb-4 gap-4"></ul>
+      <!-- Books form -->
+      <form id="book-form" class="card">
+        <div class="form-group mx-2">
+          <label for="title">Título:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="title"
+            name="title"
+            placeholder="Ingrese el título del libro"
+          />
+        </div>
+        <div class="form-group mx-2">
+          <label for="author">Autor:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="author"
+            name="author"
+            placeholder="Ingrese el nombre del autor"
+          />
+        </div>
+        <div class="form-group mx-2">
+          <label for="description">Descripción:</label>
+          <textarea
+            class="form-control"
+            id="description"
+            name="description"
+            rows="3"
+            placeholder="Ingrese una breve descripción del libro"
+          ></textarea>
+        </div>
+        <div class="form-group mx-2">
+          <label for="image_url">URL de la imagen:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="image_url"
+            name="image_url"
+            placeholder="Ingrese la URL de la imagen del libro"
+          />
+        </div>
+        <div class="form-group mx-2">
+          <label for="library_id">ID de biblioteca:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="library_id"
+            name="library_id"
+            placeholder="Ingrese el ID de la biblioteca a la que pertenece el libro"
+          />
+        </div>
+        <div class="form-group mx-2">
+          <label for="stock">Stock:</label>
+          <input
+            type="number"
+            class="form-control"
+            id="stock"
+            name="stock"
+            placeholder="Ingrese la cantidad de ejemplares disponibles"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary m-2">Agregar libro</button>
+      </form>
+    </div>
+    <script>
+      // Global variables
+      let token = "";
+      // Components
+      const Book = ({
+        id,
+        title,
+        author,
+        description,
+        image_url,
+        library_id,
+        stock,
+      }) => {
+        return `
+        <li class="card">
+          <div class="form-group mx-2">
+            <label >Id:</label>
+            <input type="text" class="form-control" disabled value="${id}" />
+          </div>
+          <div class="form-group mx-2">
+            <label >Título:</label>
+            <input type="text" class="form-control" disabled value="${title}" />
+          </div>
+          <div class="form-group mx-2">
+            <label>Autor:</label>
+            <input type="text" class="form-control" disabled value="${author}" />
+          </div>
+          <div class="form-group mx-2">
+            <label ption">Descripción:</label>
+            <textarea class="form-control" rows="3" disabled>${description}</textarea>
+          </div>
+          <div class="form-group mx-2">
+            <label>URL de la imagen:</label>
+            <input type="text" class="form-control" disabled value="${image_url}" />
+          </div>
+          <div class="form-group mx-2">
+            <label>ID de biblioteca:</label>
+            <input type="number" class="form-control" disabled value="${library_id}" />
+          </div>
+          <div class="form-group mx-2 mb-2">
+            <label>Stock:</label>
+            <input type="number" class="form-control" disabled value="${stock}" />
+          </div>
+          <button class="btn btn-danger m-2">Borrar libro</button>
+        </li>
+        `;
+      };
+      // Validators
+      const emptyAttributes = (book) => {
+        return Object.keys(book).some((key) => book[key] === "");
+      };
+
+      // Requests
+      const bookPost = async (book) => {
+        const myHeaders = new Headers();
+        if (token) myHeaders.append("Authorization", token);
+        myHeaders.append("Content-Type", "application/json");
+        const raw = JSON.stringify(book);
+        const requestOptions = {
+          method: "POST",
+          headers: myHeaders,
+          body: raw,
+          redirect: "follow",
+        };
+
+        try {
+          const response = await fetch(
+            "http://127.0.0.1:8080/api/book",
+            requestOptions
+          );
+          const response_body = await response.json();
+        } catch (error) {
+          alert("Failed book creation");
+        }
+      };
+      const bookGet = async () => {
+        const requestOptions = {
+          method: "GET",
+          redirect: "follow",
+        };
+        try {
+          const response = await fetch(
+            "http://127.0.0.1:8080/api/books",
+            requestOptions
+          );
+          return await response.json();
+        } catch (error) {
+          console.log(error);
+          alert("No se pudo obtener los libros");
+          return [];
+        }
+      };
+
+      // Events
+      const paintBooks = (books) => {
+        bookGet().then((bookList) => {
+          books.innerHTML = "";
+          bookList.forEach((book) => (books.innerHTML += Book(book)));
+        });
+      };
+      const bookSubmit = (ev, form) => {
+        ev.preventDefault();
+        const body = new FormData(form);
+        const json = Object.fromEntries(body);
+        json.stock = parseInt(json.stock) || -1;
+        json.library_id = parseInt(json.library_id) || null;
+        debugger;
+        if (emptyAttributes(json)) {
+          alert("Faltan atributos en el formulario del libro");
+          return;
+        }
+        bookPost(json);
+      };
+
+      const books = document.querySelector("#book-list");
+      const bookForm = document.querySelector("#book-form");
+
+      bookForm.addEventListener("submit", (ev) => bookSubmit(ev, bookForm));
+      paintBooks(books);
+    </script>
+  </body>
+</html>
