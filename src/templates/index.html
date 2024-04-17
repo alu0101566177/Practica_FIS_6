@@ -11,15 +11,36 @@
       rel="stylesheet"
     />
     <meta name="viewport" />
+    <script>
+      const logout = async () => {
+        if (!confirm("Estas seguro?")) return;
+        const requestOptions = {
+          method: "DELETE",
+          redirect: "follow",
+        };
+        await fetch("/login", requestOptions);
+        window.location.reload();
+      };
+    </script>
   </head>
   <body>
     <header class="header">
       <nav>
         <div class="nav-bar">
           <i class="bx bx-menu sidebarOpen"></i>
-          <span class="logo navLogo">
+          <span
+            class="logo navLogo"
+            style="
+              display: inline-flex;
+              flex-direction: row;
+              justify-content: center;
+              align-items: center;
+              gap: 20px;
+            "
+          >
             {{#name}}
             <p style="font-weight: bold">{{name}}</p>
+            <button id="login-btn" onclick="logout()">Logout</button>
             {{/name}} {{^name}}
             <button id="login-btn" onclick="window.location.replace('/login')">
               Iniciar sesión
