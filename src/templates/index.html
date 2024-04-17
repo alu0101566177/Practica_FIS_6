@@ -1,82 +1,154 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Biblioteca Pública</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <header>
-        <h1>Biblioteca Pública</h1>
-        <nav>
-            <ul>
-                <li><a href="#inicio">Inicio</a></li>
-                <li><a href="#catalogo">Catálogo</a></li>
-                <li><a href="#nosotros">Sobre nosotros</a></li>
-                <li><a href="#contacto">Contacto</a></li>
+    <link rel="stylesheet" href="/static/weird.css" />
+    <link rel="stylesheet" href="/static/style.css" />
+    <link
+      href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css"
+      rel="stylesheet"
+    />
+    <meta name="viewport" />
+  </head>
+  <body>
+    <header class="header">
+      <nav>
+        <div class="nav-bar">
+          <i class="bx bx-menu sidebarOpen"></i>
+          <span class="logo navLogo">
+            {{#name}}
+            <p style="font-weight: bold">{{name}}</p>
+            {{/name}} {{^name}}
+            <button id="login-btn" onclick="window.location.replace('/login')">
+              Iniciar sesión
+            </button>
+            {{/name}}
+          </span>
+          <div class="menu">
+            <ul class="nav-links">
+              <li><a href="#inicio">Inicio</a></li>
+              <li><a href="#catalogo">Catálogo</a></li>
+              <li><a href="#nosotros">Sobre nosotros</a></li>
+              <li><a href="#contacto">Contacto</a></li>
             </ul>
-        </nav>
+          </div>
+          <div class="darkLight-searchBox">
+            <div class="dark-light">
+              <i class="bx bx-moon moon"></i>
+              <i class="bx bx-sun sun"></i>
+            </div>
+            <div class="searchBox">
+              <div class="searchToggle">
+                <i class="bx bx-x cancel"></i>
+                <i class="bx bx-search search"></i>
+              </div>
+              <div class="search-field">
+                <input type="text" placeholder="Buscar..." />
+                <i class="bx bx-search"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="clearfix1"></div>
+      <script src="/static/navbar.js"></script>
     </header>
-
-    <main>
-        <section id="inicio">
-            <h2>Bienvenido a la Biblioteca Pública</h2>
-            <p>Aquí puedes encontrar una amplia gama de libros, revistas, periódicos y otros materiales para leer, aprender y disfrutar.</p>
-            <a href="#catalogo" class="boton">Explorar catálogo</a>
-        </section>
-
-        <section id="catalogo">
-            <h2>Catálogo de la biblioteca</h2>
-            <form action="#">
-                <input type="text" placeholder="Buscar por título, autor o ISBN">
-                <button type="submit">Buscar</button>
-            </form>
-            <ul class="lista-libros">
-                <li>
-                    <a href="#">
-                        <h3>El Señor de los Anillos</h3>
-                        <p>J.R.R. Tolkien</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <h3>Cien años de soledad</h3>
-                        <p>Gabriel García Márquez</p>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <h3>20000 leguas de viaje submarino</h3>
-                        <p>Julio Verne</p>
-                    </a>
-                </li>
-            </ul>
-        </section>
-
-        <section id="nosotros">
-            <h2>Sobre nosotros</h2>
-            <p>La Biblioteca Pública es un espacio abierto a toda la comunidad donde puedes encontrar materiales para tu formación, ocio e investigación.</p>
-            <p>Ofrecemos una amplia variedad de servicios, como:</p>
-            <ul>
-                <li>Préstamo de libros y otros materiales</li>
-                <li>Acceso a internet y ordenadores</li>
-                <li>Actividades culturales y educativas</li>
-                <li>Servicio de información y referencia</li>
-            </ul>
-        </section>
-
-        <section id="contacto">
-            <h2>Contacto</h2>
-            <p>Dirección: [Dirección de la biblioteca]</p>
-            <p>Teléfono: [Número de teléfono de la biblioteca]</p>
-            <p>Correo electrónico: [Correo electrónico de la biblioteca]</p>
-            <p>Horario: [Horario de la biblioteca]</p>
-        </section>
+    <main class="container">
+      <section id="inicio">
+        <article class="article">
+          <h2 id="bienvenida">Bienvenido a la Biblioteca Pública</h2>
+          <p>
+            Aquí puedes encontrar una amplia gama de libros, revistas,
+            periódicos y otros materiales para leer, aprender y disfrutar.
+          </p>
+        </article>
+      </section>
+      <ul class="gallery">
+        <!-- <li class="book-cover">
+          <img src="img/como_saliva_en_la_arena.jpg" alt="" />
+          <div>
+            <a href="#el-libro">Como saliva en la arena</a>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione
+              optio temporibus natus nihil.
+            </p>
+            <small>J. J. Abramas</small>
+          </div>
+        </li> -->
+        {{#books}}
+        <li class="book-cover">
+          <img src="{{image_url}}" alt="" />
+          <div>
+            <a href="/book/{{id}}">{{title}}</a>
+            <p>{{description}}</p>
+            <small>{{author}}</small>
+          </div>
+        </li>
+        {{/books}}
+      </ul>
+      <div id="nosotros">
+        <h2>Sobre nosotros</h2>
+        <p>
+          La Biblioteca Pública es un espacio abierto a toda la comunidad donde
+          puedes encontrar materiales para tu formación, ocio e investigación.
+        </p>
+        <p>Ofrecemos una amplia variedad de servicios, como:</p>
+        <ul>
+          <li>·Préstamo de libros y otros materiales</li>
+          <li>·Acceso a internet y ordenadores</li>
+          <li>·Actividades culturales y educativas</li>
+          <li>·Servicio de información y referencia</li>
+        </ul>
+      </div>
     </main>
-
-    <footer>
-        <p>&copy; 2024 Biblioteca Pública</p>
+    <footer class="footer">
+      <div class="footer__addr">
+        <h1 class="footer__logo">Biblioteca virtual</h1>
+        <h2>Contacto</h2>
+        <address>
+          Cam. San Miguel de Geneto, 2, 38296 La Laguna, Santa Cruz de
+          Tenerife<br />
+          <a class="footer__btn" href="mailto:example@gmail.com">Contáctenos</a>
+        </address>
+      </div>
+      <ul class="footer__nav">
+        <li class="nav__item" style="text-align: center">
+          <h2 class="nav__title">Contenidos</h2>
+          <ul class="nav__ul">
+            <li>
+              <a href="#">Online</a>
+            </li>
+            <li>
+              <a href="#">Locales</a>
+            </li>
+            <li>
+              <a href="#">Publicidad</a>
+            </li>
+          </ul>
+        </li>
+        <li class="nav__item" style="text-align: center">
+          <h2 class="nav__title">Legal</h2>
+          <ul class="nav__ul">
+            <li>
+              <a href="#">Política de privacidad</a>
+            </li>
+            <li>
+              <a href="#">Términos de uso</a>
+            </li>
+            <li>
+              <a href="#">Mapa del sitio</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="legal">
+        <p>&copy; 2024. Todos los derechos reservados.</p>
+        <div class="legal__links">
+          <span>Biblioteca Virtual <span class="heart"></span> </span>
+        </div>
+      </div>
     </footer>
-</body>
+  </body>
 </html>
