@@ -7,6 +7,7 @@
 #include "views/admin.h"
 #include "views/home.h"
 #include "views/login.h"
+#include <optional>
 
 // Sample main
 int main() {
@@ -26,8 +27,13 @@ int main() {
   CRUDRouter<Book> book_router{auth, books};
 
   // Main library web page
-  CROW_ROUTE(app, "/")([&books]() {
-    return Home{}.Render(books.GetAll());
+  CROW_ROUTE(app, "/")([&app, &auth, &books](const crow::request& req) {
+    auto& ctx = app.get_context<crow::CookieParser>(req);
+    auto token = ctx.get_cookie("auth");
+    std::optional<User> user{std::nullopt};
+    if (token.size() != 0)
+      user = auth.GetUserByToken(token);
+    return Home{}.Render(books.GetAll(), user);
   });
   // Admin panel
   CROW_ROUTE(app, "/admin")([&app, &auth](const crow::request& req, crow::response& res) {
