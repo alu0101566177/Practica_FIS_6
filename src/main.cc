@@ -1,17 +1,30 @@
 #include "../lib/crow_all.h"
+
 #include "db/database.h"
+
 #include "controllers/auth_controller.h"
 #include "controllers/user_controller.h"
 #include "controllers/books_controller.h"
+#include "controllers/movie_controller.h"
+#include "controllers/events_controller.h"
+#include "controllers/library_controller.h"
+
+#include "models/event.h"
+#include "models/library.h"
+#include "models/movie.h"
+
 #include "router/crud_router.h"
+
 #include "views/admin.h"
 #include "views/home.h"
 #include "views/login.h"
+
 #include <optional>
 
 // Sample main
 int main() {
   crow::App<crow::CORSHandler, crow::CookieParser> app;
+
   auto& cors{app.get_middleware<crow::CORSHandler>()};
   cors.global()
     .headers("X-Custom-Header", "Upgrade-Insecure-Requests")
@@ -22,9 +35,27 @@ int main() {
   AuthController auth{storage};
   UserController users{storage};
   BooksController books{storage};
+  MovieController movies{storage};
+  EventsController events{storage};
+  LibraryController libraries{storage};
 
-  CRUDRouter<User> user_router{auth, users};
+  CRUDRouter<User> user_router{auth, users, true};
   CRUDRouter<Book> book_router{auth, books};
+  CRUDRouter<Movie> movie_router{auth, movies};
+  CRUDRouter<Event> events_router{auth, events};
+  CRUDRouter<Library> libraries_router{auth, libraries};
+
+  crow::Blueprint user_blueprint{user_router.CreateBlueprint("api/user")};
+  crow::Blueprint book_blueprint{book_router.CreateBlueprint("api/book")};
+  crow::Blueprint movie_blueprint{movie_router.CreateBlueprint("api/movie")};
+  crow::Blueprint events_blueprint{events_router.CreateBlueprint("api/event")};
+  crow::Blueprint libraries_blueprint{libraries_router.CreateBlueprint("api/library")};
+
+  app.register_blueprint(user_blueprint);
+  app.register_blueprint(book_blueprint);
+  app.register_blueprint(movie_blueprint);
+  app.register_blueprint(events_blueprint);
+  app.register_blueprint(libraries_blueprint);
 
   // Main library web page
   CROW_ROUTE(app, "/")([&app, &auth, &books](const crow::request& req) {
@@ -35,6 +66,7 @@ int main() {
       user = auth.GetUserByToken(token);
     return Home{}.Render(books.GetAll(), user);
   });
+
   // Admin panel
   CROW_ROUTE(app, "/admin")([&app, &auth](const crow::request& req, crow::response& res) {
     auto& ctx = app.get_context<crow::CookieParser>(req);
@@ -45,14 +77,17 @@ int main() {
       res = Admin{}.Render(token);
     res.end();
   });
+
   // Login
   CROW_ROUTE(app, "/login")([&app](const crow::request& req) {
     return Login{}.Render("");
   });
+
   // Admin login
   CROW_ROUTE(app, "/admin-login")([&app](const crow::request& req) {
     return Login{}.Render("admin");
   });
+
   // Login POST
   CROW_ROUTE(app, "/login")
     .methods(crow::HTTPMethod::POST)
@@ -71,6 +106,7 @@ int main() {
     ctx.set_cookie("auth", token);
     return crow::response{crow::status::OK};
   });
+
   // Login delete
   CROW_ROUTE(app, "/login")
     .methods(crow::HTTPMethod::DELETE)
@@ -79,8 +115,6 @@ int main() {
     ctx.set_cookie("auth", "");
     return crow::response{crow::status::OK};
   });
-
-  // API
 
   // Auth
   CROW_ROUTE(app, "/api/auth")
@@ -96,46 +130,6 @@ int main() {
       return crow::response{crow::status::FORBIDDEN};
 
     return crow::response{auth.CreateToken(id)};
-  });
-
-  // Get
-  CROW_ROUTE(app, "/api/users")([&user_router](const crow::request& req) {
-    return user_router.GetAllRoute(req, true);
-  });
-  CROW_ROUTE(app, "/api/books")([&book_router](const crow::request& req) {
-    return book_router.GetAllRoute(req, false);
-  });
-
-  // GetById
-  CROW_ROUTE(app, "/api/user/<int>")([&user_router](const crow::request& req, const int id) {
-    return user_router.GetByIdRoute(req, id, true);
-  });
-  CROW_ROUTE(app, "/api/book/<int>")([&book_router](const crow::request& req, const int id) {
-    return book_router.GetByIdRoute(req, id, false);
-  });
-
-  // Create
-  CROW_ROUTE(app, "/api/user")
-    .methods(crow::HTTPMethod::POST)
-  ([&user_router](const crow::request& req) {
-    return user_router.CreateRoute(req, true);
-  });
-  CROW_ROUTE(app, "/api/book")
-    .methods(crow::HTTPMethod::POST)
-  ([&book_router](const crow::request& req) {
-    return book_router.CreateRoute(req, true);
-  });
-
-  // Delete
-  CROW_ROUTE(app, "/api/user/<int>")
-    .methods(crow::HTTPMethod::DELETE)
-  ([&user_router](const crow::request& req, const int id) {
-    return user_router.DeleteRoute(req, id, true);
-  });
-  CROW_ROUTE(app, "/api/book/<int>")
-    .methods(crow::HTTPMethod::DELETE)
-  ([&book_router](const crow::request& req, const int id) {
-    return book_router.DeleteRoute(req, id, true);
   });
 
   app.port(8080).run();
