@@ -61,7 +61,7 @@ const bookPost = async (book) => {
   };
 
   try {
-    const response = await fetch("/api/book", requestOptions);
+    const response = await fetch("/api/book/", requestOptions);
     await response.json();
   } catch (error) {
     alert("Failed book creation");
@@ -73,7 +73,7 @@ const bookGet = async () => {
     redirect: "follow",
   };
   try {
-    const response = await fetch("/api/books", requestOptions);
+    const response = await fetch("/api/book/", requestOptions);
     return await response.json();
   } catch (error) {
     console.log(error);

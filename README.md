@@ -2,6 +2,10 @@
 
 Prototipo de biblioteca virtual
 
+[Primera iteración del proyecto](https://github.com/alu0101566177/Practica_FIS_6/tree/8a64f14d008ac866c0011a757106c6fa7eab57ac)
+
+[Segunda iteración del proyecto](https://github.com/alu0101566177/Practica_FIS_6/tree/main)
+
 ## Dependencias
 
 Para compilar y ejecutar este proyecto es necesario instalar la libreria Asio C++, y la base de datos SQLite:

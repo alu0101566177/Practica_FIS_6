@@ -14,6 +14,7 @@
 #include "models/movie.h"
 
 #include "router/crud_router.h"
+#include "router/login_router.h"
 
 #include "views/admin.h"
 #include "views/home.h"
@@ -45,12 +46,14 @@ int main() {
   CRUDRouter<Event> events_router{auth, events};
   CRUDRouter<Library> libraries_router{auth, libraries};
 
+  crow::Blueprint auth_blueprint{CreateApiAuthBlueprint(auth, users)};
   crow::Blueprint user_blueprint{user_router.CreateBlueprint("api/user")};
   crow::Blueprint book_blueprint{book_router.CreateBlueprint("api/book")};
   crow::Blueprint movie_blueprint{movie_router.CreateBlueprint("api/movie")};
   crow::Blueprint events_blueprint{events_router.CreateBlueprint("api/event")};
   crow::Blueprint libraries_blueprint{libraries_router.CreateBlueprint("api/library")};
 
+  app.register_blueprint(auth_blueprint);
   app.register_blueprint(user_blueprint);
   app.register_blueprint(book_blueprint);
   app.register_blueprint(movie_blueprint);
@@ -114,22 +117,6 @@ int main() {
     auto& ctx = app.get_context<crow::CookieParser>(req);
     ctx.set_cookie("auth", "");
     return crow::response{crow::status::OK};
-  });
-
-  // Auth
-  CROW_ROUTE(app, "/api/auth")
-    .methods(crow::HTTPMethod::POST)
-  ([&auth, &users](const crow::request& req) {
-    auto body_json{crow::json::load(req.body)};
-    if (!body_json)
-      return crow::response{crow::status::BAD_REQUEST};
-
-    std::string email{body_json["email"].s()}, password{body_json["password"].s()};
-    int id{users.GetUserId(email, password)};
-    if (id == -1)
-      return crow::response{crow::status::FORBIDDEN};
-
-    return crow::response{auth.CreateToken(id)};
   });
 
   app.port(8080).run();
