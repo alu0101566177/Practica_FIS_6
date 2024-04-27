@@ -9,6 +9,7 @@
       integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
       crossorigin="anonymous"
     />
+    <script src="/static/api.js"></script>
     <script>
       // Global variables
       var auth_token = "{{ token }}";
@@ -19,11 +20,30 @@
     <nav class="navbar navbar-expand-lg bg-body-tertiary px-2">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">Administración biblioteca</a>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#book"
+                >Libros</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#user"
+                >Usuarios</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#library"
+                >Bibliotecas</a
+              >
+            </li>
+          </ul>
+        </div>
       </div>
       <button id="logout" class="btn btn-outline-danger">Logout</button>
     </nav>
     <div class="container" style="padding: 10px 0">
-      <h2>Libros</h2>
+      <h2 id="book">Libros</h2>
       <ul id="book-list" class="list-group mb-4 gap-4"></ul>
       <!-- Books form -->
       <form id="book-form" class="card">
@@ -88,6 +108,43 @@
           />
         </div>
         <button type="submit" class="btn btn-primary m-2">Agregar libro</button>
+      </form>
+      <h2 id="user" class="mt-4">Usuarios</h2>
+      <ul id="user-list" class="list-group mb-4 gap-4"></ul>
+      <form id="user-form" class="card">
+        <div class="form-group mx-2">
+          <label for="name">Nombre:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="name"
+            name="name"
+            placeholder="Ingrese el nombre del usuario"
+          />
+        </div>
+        <div class="form-group mx-2">
+          <label for="email">Email:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="email"
+            name="email"
+            placeholder="Ingrese el email"
+          />
+        </div>
+        <div class="form-group mx-2">
+          <label for="password">Contraseña:</label>
+          <input
+            type="text"
+            class="form-control"
+            id="password"
+            name="password"
+            placeholder="Ingrese la contraseña"
+          />
+        </div>
+        <button type="submit" class="btn btn-primary m-2">
+          Agregar usuario
+        </button>
       </form>
     </div>
     <script src="/static/admin.js"></script>

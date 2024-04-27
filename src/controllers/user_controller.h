@@ -17,6 +17,16 @@ class UserController : public CRUDController<User> {
       if (matches.size() == 0) return -1;
       return get<0>(matches[0]);
     }
+
+    bool Delete(const int id) const {
+      try {
+        if (id == 1) return false;
+        storage_.remove<User>(id);
+        return true;
+      } catch (const std::system_error& err) {
+        return false;
+      }
+    }
 };
 
 #endif
