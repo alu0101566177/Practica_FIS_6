@@ -199,6 +199,50 @@ footer {
   transition: all 0.3s ease-in-out;
 }
 
+#reservas h2{
+  text-align: center;
+  font-size: xx-large;
+}
+
+#reservas p {
+  text-align: center;
+  margin-left: 35px;
+}
+
+#lista_reserva{
+  margin-left: 5rem;
+  
+  li{
+    padding: 2rem;
+  }
+}
+#texto_reserva{
+  font-style: italic;
+  font-size: larger ;
+  margin-bottom: 1rem;
+
+}
+#ver_reservas{
+  margin-top: 1rem;
+  margin-left: 20rem;
+  background-color: var(--button-color);
+  font-weight: bold;
+  color: white;
+  outline: none;
+  border: 2px solid transparent;
+  border-radius: 5px;
+  padding: 10px;
+  transition: all ease 0.3s;
+  cursor: pointer;
+}
+
+#ver_reservas:hover{
+  background: transparent;
+  border: 2px solid var(--button-color);
+  color: var(--button-color);
+}
+
+
 #nosotros h2 {
   text-align: center;
   font-size: xx-large;
@@ -216,3 +260,4 @@ footer {
   padding-bottom: 50px;
   font-style: italic;
 }
+

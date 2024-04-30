@@ -52,7 +52,7 @@
               <li><a href="#inicio">Inicio</a></li>
               <li><a href="#catalogo">Catálogo</a></li>
               <li><a href="#nosotros">Sobre nosotros</a></li>
-              <li><a href="#contacto">Contacto</a></li>
+              <li><a href="mailto:example@gmail.com">Contacto</a></li>
             </ul>
           </div>
           <div class="darkLight-searchBox">
@@ -105,10 +105,35 @@
             <a href="/book/{{id}}">{{title}}</a>
             <p>{{description}}</p>
             <small>{{author}}</small>
+            <button id="boton_reserva" onclick="reservar('{{id}}')" style="cursor: pointer;">Reservar</button> 
           </div>
         </li>
         {{/books}}
       </ul>
+      <div id ="reservas">
+        <h2>Reservas</h2>
+        <p id="texto_reserva">
+          ¿Cómo realizar una reserva?
+        </p>
+        <p>
+          Para reservar un libro en nuestra biblioteca virtual, simplemente sigue estos pasos:
+        </p>
+        <ol id="lista_reserva">
+          <br>
+          <li>Explora nuestro catálogo de libros y encuentra el título que te interesa.</li>
+          <br>
+          <li>Haz clic en el botón "Reservar" junto al libro que deseas reservar.</li>
+          <br>
+          <li>¡Listo! Tu reserva será procesada y podrás recoger el libro en la fecha indicada.</li>
+          <br>
+        </ol>
+        <p>
+          ¿Tienes más preguntas sobre cómo reservar un libro? No dudes en contactarnos.
+        </p>
+        <button id="ver_reservas" onclick="">Ver mis reservas</button>
+        <hr style="margin-top: 2rem;">
+      </div>
+
       <div id="nosotros">
         <h2>Sobre nosotros</h2>
         <p>
