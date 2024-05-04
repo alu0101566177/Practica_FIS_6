@@ -17,8 +17,11 @@
 #include "router/login_router.h"
 
 #include "views/admin.h"
+#include "views/catalogue.h"
 #include "views/home.h"
 #include "views/login.h"
+#include "views/book.h"
+#include "views/profile.h"
 
 #include <optional>
 
@@ -64,10 +67,32 @@ int main() {
   CROW_ROUTE(app, "/")([&app, &auth, &books](const crow::request& req) {
     auto& ctx = app.get_context<crow::CookieParser>(req);
     auto token = ctx.get_cookie("auth");
-    std::optional<User> user{std::nullopt};
-    if (token.size() != 0)
-      user = auth.GetUserByToken(token);
+    std::optional<User> user{auth.GetUserByToken(token)};
     return Home{}.Render(books.GetAll(), user);
+  });
+  // Book info page
+  CROW_ROUTE(app, "/book/<int>")([&books](const crow::request& req, const int id) {
+    auto book{books.GetById(id)};
+    if (!book.has_value())
+      return crow::response{crow::status::NOT_FOUND};
+    return BookView{}.Render(book.value());
+  });
+  // Complete catalogue page
+  CROW_ROUTE(app, "/catalogue")([&books](const crow::request& req) {
+    return Catalogue{}.Render(books.GetAll());
+  });
+  // Profile page
+  CROW_ROUTE(app, "/profile")([&app, &auth](const crow::request& req, crow::response& res) {
+    auto& ctx = app.get_context<crow::CookieParser>(req);
+    auto token = ctx.get_cookie("auth");
+    std::optional<User> user{auth.GetUserByToken(token)};
+
+    if (!user.has_value())
+      res.redirect("/login");
+    else
+      res = Profile{}.Render(user.value());
+
+    res.end();
   });
 
   // Admin panel
