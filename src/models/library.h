@@ -6,9 +6,8 @@
 
 struct Library {
   int id;
-  int capacity;
   std::string name;
-  std::string location;
+  std::string library_url;
 
   static Library FromJson(const crow::json::rvalue&);
   crow::json::wvalue ToJson() const;

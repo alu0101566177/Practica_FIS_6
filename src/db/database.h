@@ -42,7 +42,6 @@ typedef storage_t<
   >,
   table_t<Library, false,
     column_t<int Library::*, empty_setter, primary_key_with_autoincrement<primary_key_t<>>>,
-    column_t<int Library::*, empty_setter>,
     column_t<std::string Library::*, empty_setter>,
     column_t<std::string Library::*, empty_setter>
   >,

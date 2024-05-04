@@ -38,9 +38,8 @@ Storage GetDatabase() {
   ),
   make_table("librarys",
     make_column("id", &Library::id, primary_key().autoincrement()),
-    make_column("capacity", &Library::capacity),
     make_column("name", &Library::name),
-    make_column("location", &Library::location)
+    make_column("library_url", &Library::library_url)
   ),
   make_table("events",
     make_column("id", &Event::id, primary_key().autoincrement()),
