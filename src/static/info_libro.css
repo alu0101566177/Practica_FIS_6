@@ -71,6 +71,12 @@
       font-family: 'arial-black';
       text-transform: uppercase;
     }
+
+    & .title:hover {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
     & .author {
 
       padding-top: 5px;

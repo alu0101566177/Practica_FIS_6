@@ -12,7 +12,8 @@ class Catalogue {
     Catalogue() : page_{crow::mustache::load("catalogue.html")} {}
 
     crow::response Render(const std::vector<Book>& books) const {
-      auto ctx{SerializeModels(books)};
+      crow::mustache::context ctx;
+      ctx["books"] = SerializeModels(books);
       return crow::response{page_.render_string(ctx)};
     }
 
