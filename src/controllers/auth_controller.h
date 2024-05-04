@@ -44,6 +44,7 @@ class AuthController {
     }
 
     std::optional<User> GetUserByToken(const std::string& token) {
+      if (token.empty()) return std::nullopt;
       std::string raw_token{HexToString(token)};
       crow::json::rvalue json{crow::json::load(raw_token)};
 

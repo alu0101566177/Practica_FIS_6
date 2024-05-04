@@ -6,8 +6,11 @@
   box-sizing: border-box;
 }
 
-body {
+html, body {
   background: #43423E;
+  height: 100%;
+  width: 100%;
+  margin: 0;
 }
 
 a {
@@ -28,21 +31,22 @@ a:hover {
 .container {
   margin: 0 auto;
   width: 780px;
-  height: 640px;
   background: #F0F0ED;
   border-radius: 5px;
   position: relative;
+  display: grid;
+  grid-template-rows: auto 300px;
 }
 
 .hero {
-  height: 342px;  
   margin:0;
   position: relative;
   overflow: hidden;
   z-index:1;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-    
+  display: grid;
+  grid-template-columns: 1fr 2fr;
 }
 
 .hero:before {
@@ -52,7 +56,7 @@ a:hover {
   overflow: hidden;
   top:0; left:0;
   background:red;
-  background: url("https://i.blogs.es/6ad7c1/harry-potter-piedra-filosofal/840_560.jpeg");
+  background: linear-gradient(90deg, rgba(3,0,57,1) 0%, rgba(9,9,121,1) 35%, rgba(0,172,255,1) 100%);
   z-index:-1;
  
   transform: skewY(-2.2deg);
@@ -64,17 +68,18 @@ a:hover {
 }
 
 .cover {
-  position: absolute;
-  top: 160px;
-  left: 40px;
   z-index: 2;
+  width: 215px;
+  height: 340px;
+  object-fit: cover;
+  margin: 20px;
 }
 
 .details {
-  
-  padding: 160px 0 0 280px;
-  
-  
+
+  padding: 20px;
+
+
   .title1 {
     background: #2c2c2c;
     padding: 10px;
@@ -84,35 +89,27 @@ a:hover {
     margin-bottom: 13px;
     position: relative;
     line-height: 43px;
-    
+    margin-right: 10px;
   }
 
   .author {    
-    color: #C7C1BA;
+    color: #030303;
     font-size: 23px;    
     font-weight: 300;
     margin-bottom: 7px;
+    font-weight: bolder;
   }
-  
+
 }
 
+
 .description {
-  
-  bottom: 0px;
-  height: 200px;
   font-size: 16px;
   line-height: 26px;
   color: #B1B0AC;
-  
+  padding: 20px;
 }
 
-.column1 {
-  padding-left: 50px;
-  padding-top: 120px;
-  width: 220px;
-  float: left;
-  text-align: center;
-}
 button{
   background: #2c2c2c;
   border-radius: 5px;
