@@ -7,6 +7,7 @@
 #include "../models/event.h"
 #include "../models/library.h"
 #include "../models/movie.h"
+#include "../models/reservation.h"
 #include <string>
 #include <optional>
 
@@ -52,6 +53,12 @@ typedef storage_t<
     column_t<std::string Event::*, empty_setter>,
     column_t<std::string Event::*, empty_setter>,
     column_t<std::string Event::*, empty_setter>
+  >,
+  table_t<Reservation, false,
+    column_t<int Reservation::*, empty_setter, primary_key_with_autoincrement<primary_key_t<>>>,
+    column_t<int Reservation::*, empty_setter>,
+    column_t<int Reservation::*, empty_setter>,
+    column_t<long Reservation::*, empty_setter>
   >
 > Storage;
 

@@ -3,6 +3,7 @@
 #include "../models/book.h"
 #include "../models/event.h"
 #include "../models/library.h"
+#include "../models/reservation.h"
 
 #include <sqlite3.h>
 
@@ -48,6 +49,12 @@ Storage GetDatabase() {
     make_column("description", &Event::description),
     make_column("location", &Event::location),
     make_column("date", &Event::date)
+  ),
+  make_table("reservation",
+    make_column("id", &Reservation::id, primary_key().autoincrement()),
+    make_column("book_id", &Reservation::book_id),
+    make_column("user_id", &Reservation::user_id),
+    make_column("expire_date", &Reservation::expire_date)
   )
   );
   storage.sync_schema();

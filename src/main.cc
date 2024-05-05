@@ -1,5 +1,6 @@
 #include "../lib/crow_all.h"
 
+#include "controllers/reservation_controller.h"
 #include "db/database.h"
 
 #include "controllers/auth_controller.h"
@@ -42,6 +43,7 @@ int main() {
   MovieController movies{storage};
   EventsController events{storage};
   LibraryController libraries{storage};
+  ReservationController reservations{storage};
 
   CRUDRouter<User> user_router{auth, users, true};
   CRUDRouter<Book> book_router{auth, books};
@@ -82,7 +84,7 @@ int main() {
     return Catalogue{}.Render(books.GetAll());
   });
   // Profile page
-  CROW_ROUTE(app, "/profile")([&app, &auth](const crow::request& req, crow::response& res) {
+  CROW_ROUTE(app, "/profile")([&app, &auth, &reservations, &books](const crow::request& req, crow::response& res) {
     auto& ctx = app.get_context<crow::CookieParser>(req);
     auto token = ctx.get_cookie("auth");
     std::optional<User> user{auth.GetUserByToken(token)};
@@ -90,7 +92,7 @@ int main() {
     if (!user.has_value())
       res.redirect("/login");
     else
-      res = Profile{}.Render(user.value());
+      res = Profile{}.Render(user.value(), reservations.GetReservations(user->id), books);
 
     res.end();
   });
@@ -142,6 +144,22 @@ int main() {
     auto& ctx = app.get_context<crow::CookieParser>(req);
     ctx.set_cookie("auth", "");
     return crow::response{crow::status::OK};
+  });
+
+  // Reservation POST
+  CROW_ROUTE(app, "/reserve/<int>")
+    .methods(crow::HTTPMethod::POST)
+  ([&app, &reservations, &auth](const crow::request& req, const int book_id) {
+    auto ctx = app.get_context<crow::CookieParser>(req);  
+    auto token = ctx.get_cookie("auth");
+    auto user = auth.GetUserByToken(token);
+
+    if (!user.has_value())
+      return crow::response{crow::status::UNAUTHORIZED};
+    if (!reservations.MakeReservation(book_id, user->id))
+      return crow::response{crow::status::BAD_REQUEST};
+
+    return crow::response{crow::status::CREATED};
   });
 
   app.port(8080).run();
